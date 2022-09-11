@@ -1,12 +1,13 @@
 from sqlmodel import SQLModel, Field
+from app.models.enums import Health
 from typing import Optional
 
 
 # common attributes for all plant models
 class PlantBase(SQLModel):
     nickname: str
-    species: Optional[str] = "unknown"
-    health: str
+    species: Optional[str] = "tbd"
+    health: Health
 
 
 # sqlmodel reads this to create appropriate metadata for db table
