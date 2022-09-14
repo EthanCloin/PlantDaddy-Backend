@@ -1,7 +1,7 @@
 import os
 import logging
-from sqlmodel import create_engine, SQLModel
-from sqlmodel.engine import Engine
+from sqlmodel import create_engine, SQLModel, Session
+from sqlalchemy.engine import Engine
 from dotenv import load_dotenv
 
 _log = logging.getLogger(__name__)
@@ -10,12 +10,8 @@ load_dotenv()
 SQLITE_FILE = os.environ.get("SQLITE_FILE", "")
 
 
-def create_tables(engine: Engine):
-    SQLModel.metadata.create_all(bind=engine)
-
-
+# TODO: update this to simply store the full url in .env
 def get_engine() -> Engine:
-    """"""
     sqlite_url = f"sqlite:///{SQLITE_FILE}"
     options = {"check_same_thread": False}
     try:
@@ -25,7 +21,16 @@ def get_engine() -> Engine:
         print(f"uh oh bucko {err}")
         raise
 
-    # looks at models which are tagged with "table=True"
-    # and links them to the tables
-    create_tables(engine=engine)
     return engine
+
+
+_engine = get_engine()
+
+
+def get_session() -> Session:
+    with Session(bind=_engine) as session:
+        yield session
+
+
+def init_db() -> None:
+    SQLModel.metadata.create_all(bind=_engine)
