@@ -2,6 +2,7 @@ import os
 import logging
 from sqlmodel import create_engine, SQLModel, Session
 from sqlalchemy.engine import Engine
+from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 
 _log = logging.getLogger(__name__)
@@ -27,10 +28,14 @@ def get_engine() -> Engine:
 _engine = get_engine()
 
 
-def get_session() -> Session:
-    with Session(bind=_engine) as session:
-        yield session
+# def get_session() -> Session:
+#     session = sessionmaker(bind=_engine)
+#     with session() as s:
+#         yield s
 
 
 def init_db() -> None:
     SQLModel.metadata.create_all(bind=_engine)
+
+
+LocalSession = sessionmaker(bind=_engine)
