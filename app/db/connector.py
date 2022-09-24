@@ -1,9 +1,10 @@
-import os
 import logging
-from sqlmodel import create_engine, SQLModel, Session
+import os
+
+from dotenv import load_dotenv
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
+from sqlmodel import SQLModel, create_engine
 
 _log = logging.getLogger(__name__)
 load_dotenv()

@@ -14,3 +14,12 @@ class Health(str, Enum):
     LIVING = "living"
     GROWING = "growing"
     THRIVING = "thriving"
+
+
+class WateringFrequency(int, Enum):
+    """the number of days between waterings for a plant"""
+
+    MONTHLY = 30
+    BIMONTHLY = 14
+    WEEKLY = 7
+    BIWEEKLY = 4

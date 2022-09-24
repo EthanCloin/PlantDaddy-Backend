@@ -1,11 +1,12 @@
 # from fastapi import FastAPI, HTTPException, Query, Depends
-from fastapi import FastAPI, Depends
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# from sqlmodel import select
-from app.api.dependencies import get_db, LocalSession
+from app.api.dependencies import LocalSession, get_db
 from app.db.connector import init_db
 from app.models.plant import Plant, PlantCreate, PlantRead
+
+# from sqlmodel import select
 
 # from app.models.enums import Health
 
